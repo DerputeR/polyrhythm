@@ -16,6 +16,11 @@ body {
     margin-top:5px;
 }
 
+.clearAverage {
+    text-align: center;
+    margin-top:5px;
+}
+
 .polyrhythms {
   text-align: center;
   /* justify-content: space-evenly;
@@ -85,7 +90,8 @@ kbd{
 }
 
 .key {
-    transition: all 0.01s linear 0.01s
+    transition: all 0.01s linear 0.01s;
+    position: relative;
 }
 
 .pressed {
@@ -100,21 +106,30 @@ kbd{
 
 
 }
+
 .beat {
-    position: relative;
+    pointer-events: none;
+    position: absolute;
     display: block;
     align-content: center;
-
-    /* margin-left: auto;
-    margin-right: auto; */
-    width: 20px;
-    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.5em;
+    margin-top: -0.5em;
+    width: 1em;
+    height: 1em;
     border-radius: 50%;
     background-color: #ff5722;
-    animation: beatAnimate2 1s infinite;
-    animation-timing-function: linear;
+    /* animation: beatAnimate2 1s infinite;
+    animation-timing-function: linear; */
     /* margin-left: 30%; */
     z-index: 10;
+}
+
+.animatedBall {
+    transition-property: transform;
+    transition-timing-function: linear;
+    transition-duration: 1s;
 }
 
 .beat1 {
@@ -124,7 +139,7 @@ kbd{
     height: 20px;
     border-radius: 50%;
     background-color: #ff5722;
-    animation: beatAnimate2 1s infinite;
+    animation: beatAnimate2 2s infinite;
     animation-timing-function: linear;
     /* margin-left: 30%; */
     z-index: -10;
@@ -136,28 +151,28 @@ kbd{
     height: 20px;
     border-radius: 50%;
     background-color: #ff5722;
-    animation: beatAnimate2 1s infinite;
+    animation: beatAnimate2 2s infinite;
     animation-timing-function: linear;
     /* margin-left: 65%; */
     z-index: -10;
 
 }
 
-@keyframes beatAnimate {
+/* @keyframes beatAnimate {
     from {
       transform: translate3d(0, 0, 0);
     }
     to {
         transform: translate3d(0, 500px, 0);
     }
-  }
+  } */
 
 @keyframes beatAnimate2 {
     from {
-        transform: translateY(0px);
+        transform: translateY(-200px);
     }
     to {
-        transform: translateY(600px);
+        transform: translateY(200px);
 
     }
 }
@@ -246,11 +261,8 @@ kbd{
     animation: glow 1s ease-in-out infinite alternate;
   }
 
-  @keyframes glow {
+   @keyframes glow {
     from {
-      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-    }
-    to {
-      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-    }
-  }
+      text-shadow: 6px 6px 20px #f586ff 
+    } 
+   }

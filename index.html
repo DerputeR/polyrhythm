@@ -13,12 +13,14 @@
 </head>
 <body style>
 
-    <h1 class="header glow"><strong>Polyrhythm Trainer</strong></h1>
+    <h1 class="header glow"><strong>Polyrhythm Playground</strong></h1>
+
     <div class="bpm">
         <label style=color:#ff928e> BPM 
             <input type="number" id="bpmInput" value="60" step="1"/>
         </label>
     </div>
+
     <div class="polyrhythms">
         <label style=color:#ff928e> Polyrhythm1
             <input type="number" id="poly1Input" value="3" min="1" step="1"/>
@@ -27,6 +29,7 @@
             <input type="number" id="poly2Input" value="2" min="1" step="1"/>
         </label>
     </div>
+
     <div class="toggle">
         <button type="button" onclick="metronome.toggleMute()">Toggle Metronome</button>   
     </div>
@@ -36,13 +39,16 @@
     <div class="toggle">
         <button type="button" data-index="1" onclick="toggleMutePolyrhythm(1);">Toggle Polyrhythm2</button>   
     </div>
+    
+    
     <!-- <h2 class="average"><strong>Average: </strong></h1> -->
 
-    <!--Keys F and J for Clicking-->
-    <div class="allBeats">
+    <!--Beat Balls-->
+    <!-- <div class="allBeats">
         <div class="beat beat1"></div> 
         <div class="beat beat2"></div>
-    </div>
+    </div> -->
+
     <div class="music-notes">
         <div class="note-1">
           &#9835; &#9833;
@@ -56,35 +62,30 @@
         <div class="note-4">
           &#9834;
         </div>
-      </div>
-    <div class ="keys">
+    </div>
 
+    <div class ="keys">
         <div data-key="70" id="keyf" class="key">
             <kbd> F </kbd>
-            <!-- <div class="beat"></div> -->
+            <div data-index="0" class="beat"></div>
         </div>  
         <div data-key="74" id="keyj" class="key">
             <kbd> J </kbd>
-            <!-- <div class="beat"></div> -->
+            <div data-index="1" class="beat"></div>
         </div>  
     </div>
 
     <a href="https://www.FesliyanStudios.com" class="copyright"> Sounds </a>
 
-    <audio data-key="74" id="jSound" src="assets/DrumStick_A_short.mp3"></audio>
-    <audio data-key="70" id="fSound" src="assets/DrumStick_B_short.mp3"></audio>
-    <audio id="metronome" src="assets/WoodBlockB_short.mp3">
+    <audio data-key="74" id="jSound" src="assets/DrumStick_A_short.wav"></audio>
+    <audio data-key="70" id="fSound" src="assets/DrumStick_B_short.wav"></audio>
+    <audio id="metronome" src="assets/WoodBlockB_short.wav">
 
     <div id="sample_react_component"></div>
 
-    <!-- Load React. -->
-    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-
-    <!-- Load JSX Syntax -->
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="js/index.js" type="text/babel"></script>
+    <script src="js/index.js"></script>
+    <!-- <script src="js/data.js"></script> -->
+    
 </body>
 </html>
 <!-- Sounds from https://www.FesliyanStudios.com -->
