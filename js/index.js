@@ -14,6 +14,7 @@ let metronome = {
     timeLastTick: undefined,
     timeNow: undefined,
     tick: () => {
+        // Metronome time keeping
         metronome.timeNow = Date.now();
         if (metronome.timeNow - metronome.timeLastTick >= metronome.interval) {
             metronome.timeLastTick = metronome.timeNow;
@@ -21,9 +22,21 @@ let metronome = {
                 metronome.audiofile.currentTime = 0;
                 metronome.audiofile.play();
             }
-            console.log("tick");
+            // console.log("metronome ticked");
+        }
+
+        // Polyrhythm time keeping
+        for (let i = 0; i < polyrhythmList.length; i++) {
+            const interval = polyrhythmList[i].currentBeat * (metronome.interval / polyrhythmList[i].beats);
+            if (metronome.timeNow - metronome.timeLastTick >= interval || metronome.timeNow - metronome.timeLastTick == 0) {
+                // console.log(`Current: ${metronome.timeNow}, Last: ${metronome.timeLastTick}, Diff: ${metronome.timeNow - metronome.timeLastTick}, Expected diff: ${polyrhythmList[i].currentBeat * (metronome.interval / polyrhythmList[i].beats)}`);
+                polyrhythmList[i].tick();
+            }
+            // console.log(`Current: ${metronome.timeNow}, Last: ${metronome.timeLastTick}, Diff: ${metronome.timeNow - metronome.timeLastTick}, Expected diff: ${polyrhythmList[i].currentBeat * (metronome.interval / polyrhythmList[i].beats)}`);
+            // console.log(polyrhythmList[i].currentBeat);
         }
         metronome.running = requestAnimationFrame(metronome.tick); 
+        // console.log(`Current: ${metronome.timeNow}, Last: ${metronome.timeLastTick}`);
     },
     start: () => {
         metronome.timeNow = Date.now();
@@ -50,101 +63,71 @@ let metronome = {
 const inputField = document.querySelector("#bpmInput");
 inputField.addEventListener("input", metronome.updateBPM);
 
-let polyrhythm1 = {
-    subdiv: 3,
-    running: undefined,
-    muted: false,
-    onTimeJ: undefined,
-    audiofile: new Audio(document.querySelector("#jSound").src),
-    tick: () => {
-        const interval = (1000 * ((1 / metronome.bpm) / 60)) / polyrhythm1.subdiv;
-        if (!polyrhythm1.muted) {
-            polyrhythm1.audiofile.play();
+
+class Polyrhythm {
+    constructor(beats, soundfileID) {
+        this.currentBeat = 1;
+        this.beats = beats;
+        this.now = Date.now;
+        this.muted = false;
+        this.audiofile = new Audio(document.querySelector(soundfileID).src);
+    }
+
+    tick(downbeat) {
+        if (!this.muted) {
+            this.audiofile.currentTime = 0;
+            this.audiofile.play();
         }
-        console.log("tick1");
-        polyrhythm1.running = setTimeout(polyrhythm1.tick, Math.max(0, polyrhythm1.interval));
-    },
-    start: () => {
-        polyrhythm1.running = setTimeout(polyrhythm1.tick, 0);
-    },
-    stop: () => {
-        clearTimeout(polyrhythm1.running);
-    },
-    toggleMute: () => {
-        polyrhythm1.muted = !polyrhythm1.muted;
+        this.currentBeat = (this.currentBeat % this.beats) + 1;
+        // console.log(this + "ticked");
     }
 }
 
-let polyrhythm2 = {
-    subdiv: 2,
-    running: undefined,
-    muted: false,
-    onTimeF: undefined,
-    audiofile: new Audio(document.querySelector("#fSound").src),
-    tick: () => {
-        const interval = (1000 * ((1 / metronome.bpm) / 60)) / polyrhythm2.subdiv;
-        if (!polyrhythm2.muted) {
-            polyrhythm2.audiofile.play();
-        }
-        console.log("tick2");
-        polyrhythm2.running = setTimeout(polyrhythm2.tick, Math.max(0, polyrhythm2.interval));        
-    },
-    start: () => {
-        polyrhythm2.running = setTimeout(polyrhythm2.tick, 0);
-    },
-    stop: () => {
-        clearTimeout(polyrhythm2.running);
-    },
-    toggleMute: () => {
-        polyrhythm2.muted = !polyrhythm2.muted;
-    }
+function toggleMutePolyrhythm(index) {
+    polyrhythmList[index].muted = !polyrhythmList[index].muted;
 }
 
-// function bpmchange() {
-//     metronome.bpm = document.getElementById("bpmInput").value;
-// }
+const poly1 = document.getElementById("poly1Input");
+const poly2 = document.getElementById("poly2Input");
+
+poly1.addEventListener("input", (e) => {
+    polyrhythmList[0].beats = e.target.value;
+});
+poly2.addEventListener("input", (e) => {
+    polyrhythmList[1].beats = e.target.value;
+});
+
+
+const polyrhythmList = [new Polyrhythm(poly1.value, "#fSound"), new Polyrhythm(poly2.value, "#jSound")];
+
+// const userBpm = document.getElementById("bpmInput");
+
+metronome.bpm = document.getElementById("bpmInput").value;
+
 
 function offPercent(press, expected) {
     return (Math.abs(press - expected) / 10); 
 }
-
-// function metronome() {
-//     const interval = 1000 * (bpm / 60);
-//     const now = new Date();
-//     const a = document.getElementById('metronome');
-//     const audioClip = new Audio(a.src);
-//     console.log("tick");
-//     running = setTimeout(metronome, Math.max(0, interval));
-//     audioClip.play();
-// }
-
-// function startMetronome() {
-//     running = setTimeout(metronome, 0);
-// }
-
-// function stopMetronome() {
-//     clearTimeout(running);
-// }
 
 // let now = Date.now();
 document.addEventListener('keydown', (e) => {
     let audio = undefined;
     if (e.keyCode == 74) {
         audio = document.getElementById('jSound');
-        // let jPress = now;
-        // let offPctJ = offPercent(jPress, polyrhythm1.onTimeJ);
+        let jPress = now;
+        let offPctJ = offPercent(jPress, polyrhythm1.onTimeJ);
     }
     if (e.keyCode == 70) {
         audio = document.getElementById('fSound');
-        // let fPress = now;
-        // let offPctF = offPercent(fPress, polyrhythm1.onTimeF);
+        let fPress = now;
+        let offPctF = offPercent(fPress, polyrhythm1.onTimeF);
 
-        /*Average performance summary concept code
-        var percent = [];
-        percent.push(OffPctJ, OffPctF);
-        const arrAvg = percent => percent.reduce((a,b) => a + b, 0) / percent.length
-        Something along the lines of this :(
-        */
+    /*Average performance summary concept code
+    var percent = [];
+    percent.push(OffPctJ, OffPctF);
+    const arrAvg = percent => percent.reduce((a,b) => a + b, 0) / percent.length
+    Something along the lines of this :( */
+        
     }
     if (audio != undefined) {
         const audioClip = new Audio(audio.src);

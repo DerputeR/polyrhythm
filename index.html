@@ -16,19 +16,28 @@
     <h1 class="header glow"><strong>Polyrhythm Trainer</strong></h1>
     <div class="bpm">
         <label style=color:#ff928e> BPM 
-            <input type="number" id="bpmInput" value="60"/>
+            <input type="number" id="bpmInput" value="60" step="1"/>
         </label>
-            <!-- <button onclick = "bpmchange();"> Set BPM </button> -->
+    </div>
+    <div class="polyrhythms">
+        <label style=color:#ff928e> Polyrhythm1
+            <input type="number" id="poly1Input" value="3" min="1" step="1"/>
+        </label>
+        <label style=color:#ff928e> Polyrhythm2
+            <input type="number" id="poly2Input" value="2" min="1" step="1"/>
+        </label>
     </div>
     <div class="toggle">
         <button type="button" onclick="metronome.toggleMute()">Toggle Metronome</button>   
     </div>
     <div class="toggle">
-        <button type="button" onclick="polyrhythm1.toggleMute();">Toggle Polyrhythm1</button>   
+        <button type="button" data-index="0" onclick="toggleMutePolyrhythm(0)">Toggle Polyrhythm1</button>   
     </div>
     <div class="toggle">
-        <button type="button" onclick="polyrhythm2.toggleMute();">Toggle Polyrhythm2</button>   
+        <button type="button" data-index="1" onclick="toggleMutePolyrhythm(1);">Toggle Polyrhythm2</button>   
     </div>
+    <!-- <h2 class="average"><strong>Average: </strong></h1> -->
+
     <!--Keys F and J for Clicking-->
     <div class="allBeats">
         <div class="beat beat1"></div> 
