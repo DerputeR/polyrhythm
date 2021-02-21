@@ -17,10 +17,10 @@ Features:
 Visualizing how polyrhythms line up is an extremely difficult task. The falling balls allow for one to easily do so in an easily understandable manner. 
 - Simple and accessible UI
     - No clutter
-- Facilitates early music education.
-Easy alteration of polyrhythms through user input
-Allows for the practice of more obscure/uncommon polyrhythms such as 7:11, 4:7 
-Metronome integration
-Option to disable polyrhythms so it can also be used as a simple metronome if so desired by the usee
+    - Kid-friendly design facilitates early music education.
+    - Easy alteration of polyrhythms through user input
+        - Allows for the practice of more obscure/uncommon polyrhythms such as 7:11 and 4:7 
+- Metronome integration
+    - Option to disable polyrhythms so it can also be used as a simple metronome if so desired by the user
 
 # Improving musicality using technology!
