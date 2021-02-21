@@ -7,9 +7,76 @@
     <meta name="keywords" content="">
     <meta name="author" content="Donald Nelson, Garv Gaur, Natasha Setiadi, James Shin">
     <link rel=stylesheet href="css/index.css" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Blueprint Hackathon</title>
 </head>
-<body>
+<body style>
+    <h1 class="header"><strong>Polyrhythm Trainer</strong></h1>
+    <div class="bpm">
+        <label> BPM 
+            <input type="number" id="bpmInput" value="60"/>
+        </label>
+            <!-- <button onclick = "bpmchange();"> Set BPM </button> -->
+    </div>
+    <!--Keys F and J for Clicking-->
+    <div class="beat1"></div>
+    <div class="beat2"></div>
+
+    <div class ="keys">
+
+        <div data-key="70" id="keyf" class="key"><kbd> F </kbd> </div>  
+        <div data-key="74" id="keyj" class="key"><kbd> J </kbd></div>  
+    </div>
+
+    <a href="https://www.FesliyanStudios.com" class="copyright"> Sounds </a>
+
+    <audio data-key="74" id="jSound" src="assets/DrumStick_A_short.mp3"></audio>
+    <audio data-key="70" id="fSound" src="assets/DrumStick_B_short.mp3"></audio>
+    <audio id="metronome" src="assets/WoodBlockB_short.mp3">
+
+    <script>
+        document.addEventListener('keydown', (e) => {
+            let audio = undefined;
+            if (e.keyCode == 74) {
+                audio = document.getElementById('jSound');
+            }
+            if (e.keyCode == 70) {
+                audio = document.getElementById('fSound');
+            }
+            if (audio != undefined) {
+                const audioClip = new Audio(audio.src);
+                audioClip.play();
+                const key = document.querySelector(`.key[data-key="${e.keyCode}"`);
+                key.classList.add("pressed");
+            } 
+        });
+        document.addEventListener('pointerdown', (e) => {
+            let audio;
+            if (e.button == 0 && e.target.classList.contains("key")) {
+                e.target.classList.add("pressed");
+                audio = document.querySelector(`audio[data-key="${e.target.getAttribute("data-key")}"]`);
+                const audioClip = new Audio(audio.src);
+                audioClip.play();
+            }
+        });
+        document.addEventListener('keyup', (e) => {
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"`);
+            if (key != null) {
+                key.classList.remove("pressed");
+            }
+        });
+        document.addEventListener("pointerup", (e) => {
+            if (e.button == 0 && e.target.classList.contains("key")) {
+                e.target.classList.remove("pressed");
+            }
+        })
+        // document.addEventListener("transitionend", (e) => {
+        //     if (e.propertyName === "transform" && e.target.classList.contains("pressed")) {
+        //         e.target.classList.remove("pressed");
+        //     }
+        // })
+    </script>
+
     <div id="sample_react_component"></div>
 
     <!-- Load React. -->
@@ -22,3 +89,4 @@
     <script src="js/index.js" type="text/babel"></script>
 </body>
 </html>
+<!-- Sounds from https://www.FesliyanStudios.com -->
