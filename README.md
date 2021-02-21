@@ -8,7 +8,7 @@ This is like tracing a square with one hand while tracing a triangle with the ot
 When implemented and played correctly, polyrhythms have the potential to add depth, rhythmic tension, and contribute to the music’s overall tone. 
 Polyrhythms are seen throughout many genres of music such as difficult classical piano pieces, jazz music, latin dance, and traditional African music.
 A better understanding of how to play these polyrhythms and what they sound like will improvie musicality and technique in a wide variety of genres.
-Furthermore, this not only contributes to the community of musicians but also for the community of composer’s. The ability to quickly hear how a polyrhythm would sound for a certain tempo, through an accessible, easy-to-use webpage, can facilitate unique and intricately layered musical composition.
+Furthermore, this not only contributes to the community of musicians but also for the community of composers. The ability to quickly hear how a polyrhythm would sound for a certain tempo, through an accessible, easy-to-use webpage, can facilitate unique and intricately layered musical composition.
 
 Features:
 - Adjustable BPM for efficient practice for various situations
